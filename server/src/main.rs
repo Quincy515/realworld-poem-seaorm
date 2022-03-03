@@ -1,5 +1,7 @@
-use poem::{Server, listener::TcpListener, Route};
-use poem_openapi::{OpenApi, payload::PlainText, param::Query, OpenApiService};
+use std::time::Duration;
+
+use poem::{listener::TcpListener, Route, Server};
+use poem_openapi::{param::Query, payload::PlainText, OpenApi, OpenApiService};
 
 struct Api;
 
@@ -25,6 +27,12 @@ async fn main() -> Result<(), std::io::Error> {
     let ui = api_service.swagger_ui();
 
     Server::new(TcpListener::bind("127.0.0.1:3000"))
-        .run(Route::new().nest("/api", api_service).nest("/", ui))
+        .run_with_graceful_shutdown(
+            Route::new().nest("/api", api_service).nest("/", ui),
+            async move {
+                let _ = tokio::signal::ctrl_c().await;
+            },
+            Some(Duration::from_secs(1)),
+        )
         .await
 }
