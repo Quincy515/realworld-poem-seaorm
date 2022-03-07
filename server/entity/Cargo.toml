@@ -1,0 +1,19 @@
+[package]
+edition = "2021"
+name = "entity"
+version = "0.1.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dependencies.sea-orm]
+default-features = false
+features = [
+    "macros",
+    "debug-print",
+    "runtime-tokio-native-tls",
+    "sqlx-postgres",
+]
+version = "^0.6.0"

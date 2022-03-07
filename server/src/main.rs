@@ -1,7 +1,9 @@
 use std::time::Duration;
 
 use poem::{listener::TcpListener, Route, Server};
-use poem_openapi::{param::Query, payload::PlainText, OpenApi, OpenApiService};
+use poem_openapi::{OpenApi, OpenApiService, param::Query, payload::PlainText};
+
+use entity::sea_orm;
 
 struct Api;
 
