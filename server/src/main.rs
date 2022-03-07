@@ -1,6 +1,8 @@
 pub mod api;
+pub mod model;
 pub mod service;
-use api::user;
+
+pub use api::user;
 
 use std::time::Duration;
 
